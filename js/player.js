@@ -1,12 +1,14 @@
 class Player {
   static idle = 'idle';
   static moving = 'moving';
+  static jump = 'jump';
 
   constructor(context) {
     this.context = context;
     this.images = {
       [Player.idle]: { image: new Image(), steps: 4 },
       [Player.moving]: { image: new Image(), steps: 6 },
+      [Player.jump]: { image: new Image(), steps: 8 },
     };
 
     this.currentState = Player.idle;
@@ -28,6 +30,7 @@ class Player {
 
     this.images[Player.idle].image.src = 'assets/Black_Sheep_Idle.png';
     this.images[Player.moving].image.src = 'assets/Black_Sheep_Run.png';
+    this.images[Player.jump].image.src = 'assets/Black_Sheep_Jump.png';
 
     return Promise.all([
       new Promise((resolve) =>
@@ -40,7 +43,21 @@ class Player {
           resolve(),
         ),
       ),
+      new Promise((resolve) =>
+        this.images[Player.jump].image.addEventListener('load', () =>
+          resolve(),
+        ),
+      ),
     ]);
+  };
+
+  jump() {
+    if (this.currentState === Player.moving) {
+      this.currentState = Player.jump;
+      this.updateEvery = 100;
+      this.y = this.y - 55;
+      this.currentAnimationStep = 0;
+    }
   };
 
   setIsMoving(isRunning) {
@@ -69,6 +86,14 @@ class Player {
   update(timestamp) {
     if (this.shouldUpdate(timestamp)) {
       this.advanceAnimationStep();
+      if (
+        this.currentState === Player.jump &&
+        this.currentAnimationStep === 0
+      ) {
+        this.currentState = Player.moving;
+        this.y = this.y + 55;
+      }
+
       this.lastUpdate = timestamp;
     }
   };

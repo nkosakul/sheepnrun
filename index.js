@@ -19,6 +19,9 @@ document.addEventListener('DOMContentLoaded', () => {
     document.addEventListener('keyup', e => {
       if (e.key === 'Enter') {
         loop.toggleAnimation();
+      } else if (e.code === 'Space') {
+        // jump
+        player.jump();
       }
     });
   });
