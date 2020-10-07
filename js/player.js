@@ -2,6 +2,7 @@ class Player {
   static idle = 'idle';
   static moving = 'moving';
   static jump = 'jump';
+  static die = 'die';
 
   constructor(context) {
     this.context = context;
@@ -9,6 +10,11 @@ class Player {
       [Player.idle]: { image: new Image(), steps: 4 },
       [Player.moving]: { image: new Image(), steps: 6 },
       [Player.jump]: { image: new Image(), steps: 8 },
+    };
+
+    this.audios = {
+      [Player.jump]: new Audio(),
+      [Player.die]: new Audio(),
     };
 
     this.currentState = Player.idle;
@@ -33,6 +39,9 @@ class Player {
     this.images[Player.moving].image.src = 'assets/Black_Sheep_Run.png';
     this.images[Player.jump].image.src = 'assets/Black_Sheep_Jump.png';
 
+    this.audios[Player.jump].src = 'audio/jump3.wav';
+    this.audios[Player.die].src = 'audio/drop.wav';
+
     return Promise.all([
       new Promise((resolve) =>
         this.images[Player.idle].image.addEventListener('load', () =>
@@ -49,11 +58,23 @@ class Player {
           resolve(),
         ),
       ),
+      new Promise((resolve) =>
+        this.audios[Player.jump].addEventListener('canplaythrough', () =>
+          resolve(),
+        ),
+      ),
+      new Promise((resolve) =>
+        this.audios[Player.die].addEventListener('canplaythrough', () =>
+          resolve(),
+        ),
+      ),
     ]);
   };
 
   jump() {
     if (this.currentState === Player.moving) {
+      this.audios[Player.jump].currentTime = 0;
+      this.audios[Player.jump].play();
       this.currentState = Player.jump;
       this.updateEvery = 100;
       this.y = this.y - 55;
@@ -62,9 +83,11 @@ class Player {
   };
 
   die() {
+    this.audios[Player.die].currentTime = 0;
+    this.audios[Player.die].play();
     this.isDead = true;
-    this.updateEvery = 30
-  };
+    this.updateEvery = 30;
+  }
 
   setIsMoving(isRunning) {
     this.currentAnimationStep = 0;

@@ -3,7 +3,7 @@ document.addEventListener('DOMContentLoaded', () => {
   const context = canvas.getContext('2d');
 
   const background = new Background(context);
-  const backbroundPromise = background.init('assets/background1.png');
+  const backbroundPromise = background.init('assets/background1.png', 'audio/music1.wav');
 
   const platformCollection = new PlatformCollection(context);
   const platformPromise = platformCollection.init();

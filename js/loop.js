@@ -15,6 +15,7 @@ class Loop {
     }
 
     if (!this.player.isDead && this.isPlayerDead()) {
+      this.background.audio.pause();
       this.toggleAnimation();
       this.player.die();
     }
@@ -48,6 +49,7 @@ class Loop {
       return;
     }
 
+    this.background.playMusic();
     this.isAnimating = !this.isAnimating;
     this.player.setIsMoving(this.isAnimating);
   };
