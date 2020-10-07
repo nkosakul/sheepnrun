@@ -10,7 +10,7 @@ class Player {
     this.currentState = Player.idle;
 
     this.x = 0;
-    this.y = 0;
+    this.y = 202;
     this.sourceHeight = 464;
     this.sourceWidth = 325;
     this.height = this.sourceHeight / 3;
@@ -32,7 +32,7 @@ class Player {
         ),
       ),
     ]);
-  }
+  };
 
   advanceAnimationStep() {
     const maxStep = this.images[this.currentState].steps;
@@ -40,22 +40,23 @@ class Player {
       this.currentAnimationStep + 1 < maxStep
         ? this.currentAnimationStep + 1
         : 0;
-  }
+  };
 
   shouldUpdate(timestamp) {
     return timestamp - this.lastUpdate >= this.updateEvery;
-  }
+  };
 
   update(timestamp) {
     if (this.shouldUpdate(timestamp)) {
       this.advanceAnimationStep();
       this.lastUpdate = timestamp;
     }
-  }
+  };
 
   render() {
     const image = this.images[this.currentState];
     const sourceStartX = this.currentAnimationStep * this.sourceWidth;
+
     this.context.drawImage(
       image.image,
       sourceStartX,
@@ -67,5 +68,5 @@ class Player {
       this.width,
       this.height,
     );
-  }
+  };
 }
