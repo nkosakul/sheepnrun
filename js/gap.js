@@ -1,4 +1,4 @@
-class Gap {
+export default class Gap {
   constructor(context) {
     this.context = context;
 

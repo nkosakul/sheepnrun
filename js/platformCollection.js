@@ -1,4 +1,7 @@
-class PlatformCollection {
+import Platform from './platform.js';
+import Gap from './gap.js';
+
+export default class PlatformCollection {
   constructor(context) {
     this.context = context;
     this.platforms = [];

@@ -1,4 +1,4 @@
-class Platform {
+export default class Platform {
   constructor(context) {
     this.context = context;
     this.image = new Image();

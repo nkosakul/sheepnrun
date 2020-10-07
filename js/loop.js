@@ -1,4 +1,7 @@
-class Loop {
+import Gap from './gap.js';
+import Player from './player.js';
+
+export default class Loop {
   constructor(context, player, background, platformCollection) {
     this.context = context;
     this.player = player;
