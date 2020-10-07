@@ -16,6 +16,10 @@ document.addEventListener('DOMContentLoaded', () => {
 
     requestAnimationFrame(loop.step.bind(loop));
 
-    document.addEventListener('keyup', e => e.key === 'Enter' && loop.toggleAnimation());
+    document.addEventListener('keyup', e => {
+      if (e.key === 'Enter') {
+        loop.toggleAnimation();
+      }
+    });
   });
 });

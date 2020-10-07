@@ -23,6 +23,7 @@ class Loop {
 
   toggleAnimation() {
     this.isAnimating = !this.isAnimating;
+    this.player.setIsMoving(this.isAnimating);
   };
 
   step(timestamp) {
