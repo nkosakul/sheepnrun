@@ -63,6 +63,7 @@ class Player {
 
   die() {
     this.isDead = true;
+    this.updateEvery = 30
   };
 
   setIsMoving(isRunning) {
@@ -97,6 +98,11 @@ class Player {
       ) {
         this.currentState = Player.moving;
         this.y = this.y + 55;
+      }
+
+      if (this.isDead) {
+        this.y = this.y * 1.0981; // Erdbeschleunigung
+        this.x = this.x + 3;
       }
 
       this.lastUpdate = timestamp;

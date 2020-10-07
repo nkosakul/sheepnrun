@@ -9,13 +9,14 @@ class Loop {
 
   update(timestamp) {
     this.player.update(timestamp);
+
     if (this.isAnimating) {
       this.platformCollection.update(timestamp);
     }
+
     if (!this.player.isDead && this.isPlayerDead()) {
       this.toggleAnimation();
       this.player.die();
-      alert('💀 YOU JUST DIED! 💀');
     }
   };
 
