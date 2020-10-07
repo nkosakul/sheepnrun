@@ -23,6 +23,7 @@ class Player {
     this.lastUpdate = 0;
     this.updateEvery = 200;
     this.isRunning = false;
+    this.isDead = false;
   }
 
   init() {
@@ -58,6 +59,10 @@ class Player {
       this.y = this.y - 55;
       this.currentAnimationStep = 0;
     }
+  };
+
+  die() {
+    this.isDead = true;
   };
 
   setIsMoving(isRunning) {

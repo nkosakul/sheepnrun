@@ -5,11 +5,29 @@ class Loop {
     this.background = background;
     this.platformCollection = platformCollection;
     this.isAnimating = false;
-  }
+  };
 
   update(timestamp) {
     this.player.update(timestamp);
-    this.isAnimating && this.platformCollection.update(timestamp);
+    if (this.isAnimating) {
+      this.platformCollection.update(timestamp);
+    }
+    if (!this.player.isDead && this.isPlayerDead()) {
+      this.toggleAnimation();
+      this.player.die();
+      alert('💀 YOU JUST DIED! 💀');
+    }
+  };
+
+  isPlayerDead() {
+    const isPlayerInGap = this.platformCollection.platforms
+      .filter((platform) => platform instanceof Gap)
+      .some(
+        (gap) =>
+          gap.x <= this.player.x &&
+          gap.x + gap.width >= this.player.x + this.player.width,
+      );
+    return isPlayerInGap && this.player.currentState !== Player.jump;
   };
 
   render() {
@@ -22,6 +40,13 @@ class Loop {
   };
 
   toggleAnimation() {
+    if (
+      (this.isAnimating && this.player.currentState === Player.jump) ||
+      this.player.isDead
+    ) {
+      return;
+    }
+
     this.isAnimating = !this.isAnimating;
     this.player.setIsMoving(this.isAnimating);
   };
